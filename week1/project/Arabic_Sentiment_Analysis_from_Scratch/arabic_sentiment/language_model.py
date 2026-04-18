@@ -1,7 +1,7 @@
 from collections import defaultdict, Counter
 from typing import List, Dict, Tuple, Literal
 import math
-from random import random
+import random
 
 NGramOrder = Literal[2, 3]
 
@@ -150,13 +150,15 @@ class NgramLanguageModel:
         seq = seed.copy()
 
         for i in range(max_tokens):
+
             context = tuple(seq[-(self.n - 1):]) # if 2 --> [-(2-1)] = [-1] السياق كلمه قبل , # if 3 --> [-(3-1)] = [-2] السياق كلمتين قبل
+            
             words = []
             prob = []
             for n, c in self.ngram_counts.items():
-                if seq == n[:-1]:
-                    words.append(n[:-1])
-                    prob.append((c + 1) / (self.context_counts[context] + self.vocab_size))
+                if context == n[:-1]:
+                    words.append(n[-1])
+                    prob.append((c + 1) / (self.context_counts[context] + len(self.vocab)))
             
             if not words:
                 break
