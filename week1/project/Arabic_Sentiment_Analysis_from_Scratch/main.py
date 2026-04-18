@@ -94,24 +94,24 @@ print(cm)
 
 # ------------------------------------------------------------------------------
 
-correct_examples = []
-incorrect_examples = []
+correct = []
+incorrect = []
 
 for i in range(len(predictions)):
     item = {
         "tweet": sample_test_row[i],
-        "true": sample_test_label[i],
+        "actal": sample_test_label[i],
         "pred": predictions[i]
     }
     if predictions[i] == sample_test_label[i]:
-        correct_examples.append(item)
+        correct.append(item)
     else:
-        incorrect_examples.append(item)
+        incorrect.append(item)
 
-print("\n" + "="*30 + " 5 CORRECT PREDICTIONS " + "="*30)
-for i, ex in enumerate(correct_examples[:5]):
-    print(f"{i+1}. [True: {ex['true']} | Pred: {ex['pred']}] -> {ex['tweet']}")
+print("\n ◈  5 Correct:")
+for i, ex in enumerate(correct[:5]):
+    print(f"{i+1}. [actal: {ex['actal']} | Pred: {ex['pred']}] -> {ex['tweet']}")
 
-print("\n" + "="*30 + " 5 INCORRECT PREDICTIONS " + "="*30)
-for i, ex in enumerate(incorrect_examples[:5]):
-    print(f"{i+1}. [True: {ex['true']} | Pred: {ex['pred']}] -> {ex['tweet']}")
+print("\n ◈  5 Incorrect:")
+for i, ex in enumerate(incorrect[:5]):
+    print(f"{i+1}. [actal: {ex['actal']} | Pred: {ex['pred']}] -> {ex['tweet']}")
