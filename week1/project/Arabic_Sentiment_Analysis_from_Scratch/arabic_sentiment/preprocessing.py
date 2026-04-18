@@ -120,12 +120,12 @@ class ArabicPreprocessor:
         text1 = self.remove_diacritics(text)
         text2 = self.normalize_alef(text1)
         text3 = self.normalize_teh_marbuta(text2)
-        text4 = self.remove_urls(text3)
-        text5 = self.remove_mentions(text4)
-        text6 = self.remove_hashtags(text5)
-        text7 = self.remove_punctuation_and_emojis(text6)
-        text8 = self.remove_repeated_characters(text7)
-
+        text4 = self.remove_repeated_characters(text3)
+        text5 = self.remove_urls(text4)
+        text6 = self.remove_mentions(text5)
+        text7 = self.remove_hashtags(text6)
+        text8 = self.remove_punctuation_and_emojis(text7)
+        
         if tokenize:
             lst = self.tokenize(text8)
             return(lst)
