@@ -72,7 +72,7 @@ class ArabicPreprocessor:
         
         Hint: Unicode ranges for emojis include U+1F300–U+1F9FF and others.
         """
-        text = re.sub("[^ا-ي 0-9]"," ",text)
+        text = re.sub("[^ا-ي0-9]+"," ",text)
         return text
 
     def remove_repeated_characters(self, text: str) -> str:
@@ -98,10 +98,10 @@ class ArabicPreprocessor:
         lst = text.split()
         lst2 = []
         for l in lst:
-            if l != "" or l!= " ":
+            if l.strip():
                 lst2.append(l)
 
-        return lst
+        return lst2
 
 
     def preprocess(self, text: str, tokenize: bool = True):
