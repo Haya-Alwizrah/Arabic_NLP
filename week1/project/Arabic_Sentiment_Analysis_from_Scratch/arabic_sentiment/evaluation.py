@@ -5,11 +5,7 @@ def accuracy(predictions: List[str], gold: List[str]) -> float:
     # TODO: implement
     raise NotImplementedError
 
-def precision_recall_f1(
-    predictions: List[str],
-    gold: List[str],
-    positive_label: str = "positive"
-) -> Tuple[float, float, float]:
+def precision_recall_f1(predictions: List[str], gold: List[str], positive_label: str = "positive") -> Tuple[float, float, float]:
     """
     Compute precision, recall, and F1 for the positive class.
     
@@ -19,11 +15,7 @@ def precision_recall_f1(
     # TODO: implement without sklearn
     raise NotImplementedError
 
-def confusion_matrix_str(
-    predictions: List[str],
-    gold: List[str],
-    labels: List[str]
-) -> str:
+def confusion_matrix_str(predictions: List[str], gold: List[str], labels: List[str]) -> str:
     """
     Return a pretty-printed confusion matrix string.
     
