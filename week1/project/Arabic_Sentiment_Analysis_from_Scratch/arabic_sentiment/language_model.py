@@ -22,10 +22,10 @@ class NgramLanguageModel:
         """
         self.n = n
         self.vocab = set()
-        self.counts = Counter()
-        self.context_counts = Counter()
+        self.ngram_counts = {}
+        self.context_counts = {}
   
-    def extract_ngrams(self, tokens: List[str]) -> List[Tuple[str, ...]]:
+    def extract_ngrams(self, tokens: List[str]) -> List[Tuple[str, ...]]: # تاخذ لست وتطلع لنا لست فيها الكلمه والكلمه اللي بعدها
         """
         Extract all n-grams from a token list.
         
@@ -46,7 +46,7 @@ class NgramLanguageModel:
         
         return lst
 
-    def train(self, corpus: List[List[str]]) -> None:
+    def train(self, corpus: List[List[str]]) -> None: # تاخذ الداتا اللي نضفناها وهي لست اوف لست 
         """
         Train on a list of tokenized sentences.
         
@@ -55,12 +55,25 @@ class NgramLanguageModel:
         """
         
         for s in corpus:
-            for w in s:
-                pass
+            ngrams = self.extract_ngrams(s)
 
-        
-        # TODO: count n-grams and context counts, build vocab
-        raise NotImplementedError
+            for n in ngrams:
+                # count n-grams
+                if n in self.ngram_counts:
+                    self.ngram_counts[n] += 1
+                else:
+                    self.ngram_counts[n] = 1
+                
+                # context counts
+                c = n[:-1]
+                if c in self.context_counts:
+                    self.context_counts[c] += 1
+                else:
+                    self.context_counts[c] = 1
+
+            #build vocab
+            for w in s:
+                self.vocab.add(w)
 
     def log_probability(self, ngram: Tuple[str, ...]) -> float:
         """
