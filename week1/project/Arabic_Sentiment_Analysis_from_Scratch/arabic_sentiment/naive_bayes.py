@@ -95,7 +95,7 @@ class NaiveBayesClassifier:
         score = -float('inf')
 
         for l in labels:
-            c_score = self.log_priors[label]
+            c_score = self.log_priors[l]
             for w in tokens:
                 if w in self.vocab:
                     c_score += self.log_likelihoods[l][w]

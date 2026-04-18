@@ -62,21 +62,25 @@ for name, model in models.items():
     print("-" * 30)
 
 # ------------------------------------------- Naive Bayes Classifier -----------------------------------------------
-naiv = NaiveBayesClassifier()
-naiv.train(clean_train, train_data["label"])
+naive = NaiveBayesClassifier()
 
+naive.train(clean_train, train_data["label"])
+
+# Take 100 Sample:
 random.seed(42)
-test_indices = random.sample(range(len(test_data)), 100)
-sample_test = test_data.select(test_indices)
+random_test_data = random.sample(range(len(test_data)), 100)
+sample_test = test_data.select(random_test_data)
 
-sample_texts = [x.split() for x in sample_test["clean_tweet"]]
-gold_labels = sample_test["label"]
-original_tweets = sample_test["tweet"]
+sample_test_row = sample_test["tweet"]
+sample_test_clean = sample_test["clean_tweet"]
+sample_test_label = sample_test["label"]
 
-predictions = naiv.predict(sample_texts)
+# Predect :
+predictions = naive.predict(sample_test_clean)
 
-acc = accuracy(predictions, gold_labels)
-prec, rec, f1 = precision_recall_f1(predictions, gold_labels, positive_label="pos")
+# ------------------------------------- evaluation --------------------------------------
+acc = accuracy(predictions, sample_test_label)
+prec, rec, f1 = precision_recall_f1(predictions, sample_test_label, positive_label=1)
 
 print("--- CLASSIFICATION REPORT ---")
 print(f"Accuracy  : {acc}")
@@ -85,19 +89,21 @@ print(f"Recall    : {rec}")
 print(f"F1-Score  : {f1}")
 
 print("\n--- CONFUSION MATRIX ---")
-cm_str = confusion_matrix_str(predictions, gold_labels, labels=["pos", "neg"])
-print(cm_str)
+cm = confusion_matrix_str(predictions, sample_test_label, labels=[1, 0])
+print(cm)
+
+# ------------------------------------------------------------------------------
 
 correct_examples = []
 incorrect_examples = []
 
 for i in range(len(predictions)):
     item = {
-        "tweet": original_tweets[i],
-        "true": gold_labels[i],
+        "tweet": sample_test_row[i],
+        "true": sample_test_label[i],
         "pred": predictions[i]
     }
-    if predictions[i] == gold_labels[i]:
+    if predictions[i] == sample_test_label[i]:
         correct_examples.append(item)
     else:
         incorrect_examples.append(item)

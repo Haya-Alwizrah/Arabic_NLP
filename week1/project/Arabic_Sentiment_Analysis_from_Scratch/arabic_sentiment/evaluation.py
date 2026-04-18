@@ -62,9 +62,9 @@ def confusion_matrix_str(predictions: List[str], gold: List[str], labels: List[s
         if p in labels and g in labels:
             m[g][p] += 1
 
-    header = f"{' ':12} | {'Pred ' + labels[0]:10} | {'Pred ' + labels[1]:10}"
+    header = f"       | Pred {labels[0]}     | Pred {labels[1]}"
     line = "-" * len(header)
-    row1 = f"{'True ' + labels[0]:12} | {m[labels[0]][labels[0]]:10} | {m[labels[0]][labels[1]]:10}"
-    row2 = f"{'True ' + labels[1]:12} | {m[labels[1]][labels[0]]:10} | {m[labels[1]][labels[1]]:10}"
+    row1 = f"True {labels[0]} | {m[labels[0]][labels[0]]:10} | {m[labels[0]][labels[1]]:10}"
+    row2 = f"True {labels[1]} | {m[labels[1]][labels[0]]:10} | {m[labels[1]][labels[1]]:10}"
     
     return f"{header}\n{line}\n{row1}\n{row2}"
