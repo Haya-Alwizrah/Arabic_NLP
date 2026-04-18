@@ -52,32 +52,32 @@ class NaiveBayesClassifier:
                 c_label[l] = 1
 
         c_word = {}
-        c_token = {}
+        t_words = {}
 
         for doc , label in zip(documents, labels):
             if label not in c_word:
                 c_word[label] = {}
-                c_token[label] = 0
+                t_words[label] = 0
             for word in doc:
                 if word in c_word[label]:
                     c_word[label][word] += 1
                 else:
                     c_word[label][word] = 1
                 
-                c_token[label] += 1
+                t_words[label] += 1
         
-        for l in c_label:
-            self.log_priors[label] = math.log2(c_label[label] / n_doc)
+        for l in c_label: # c_label: exa : {("pos", 3),("neg", 4)}
+            self.log_priors[l] = math.log2(c_label[l] / n_doc) # عدد اللي متصنفين بذا القسم على عدد الكل
             
-            self.log_likelihoods[label] = {}
+            self.log_likelihoods[l] = {}
             for word in self.vocab:
-                if word in c_word[label]:
-                    count_w_l = c_word[label][word]
+                if word in c_word[l]:
+                    count_w_l = c_word[l][word]
                 else:
                     count_w_l = 0
                 
-                prob = (count_w_l + 1) / (c_token[label] + len(self.vocab))
-                self.log_likelihoods[label][word] = math.log2(prob)
+                prob = (count_w_l + 1) / (t_words[l] + len(self.vocab))
+                self.log_likelihoods[l][word] = math.log2(prob)
 
 
     def predict_one(self, tokens: List[str]) -> Label:
@@ -89,8 +89,23 @@ class NaiveBayesClassifier:
         Returns:
             The predicted label.
         """
-        # TODO: implement
-        raise NotImplementedError
+        labels = list(self.log_priors.keys())
+
+        label = None
+        score = -float('inf')
+
+        for l in labels:
+            c_score = self.log_priors[label]
+            for w in tokens:
+                if w in self.vocab:
+                    c_score += self.log_likelihoods[l][w]
+                else:
+                    continue
+            if c_score > score:
+                score = c_score
+                label = l
+                
+        return label
 
     def predict(self, documents: List[List[str]]) -> List[Label]:
         """
