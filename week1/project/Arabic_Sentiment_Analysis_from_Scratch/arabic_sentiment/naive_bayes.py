@@ -104,7 +104,7 @@ class NaiveBayesClassifier:
             if c_score > score:
                 score = c_score
                 label = l
-                
+
         return label
 
     def predict(self, documents: List[List[str]]) -> List[Label]:
@@ -114,8 +114,11 @@ class NaiveBayesClassifier:
         Returns:
             A list of predicted labels, one per document.
         """
-        # TODO: implement using predict_one
-        raise NotImplementedError
+        lst = []
+        for s in documents:
+            s_label = self.predict_one(s)
+            lst.append(s_label)
+        return lst
 
     def top_features(self, n: int = 20) -> Dict[Label, List[Tuple[str, float]]]:
         """
@@ -127,5 +130,24 @@ class NaiveBayesClassifier:
         Returns:
             Dict mapping each label to a sorted list of (word, score) tuples.
         """
-        # TODO: implement
-        raise NotImplementedError
+        top = {}
+        labels = list(self.log_priors.keys())
+
+        for label in labels:
+            scores = []
+            other_l = None
+            for l in labels:
+                if l != label:
+                    other_l = l
+                    break
+
+            for w in self.vocab:
+                log_c = self.log_likelihoods[label][w]
+                log_other = self.log_likelihoods[other_l][w]
+                score = log_c - log_other
+                scores.append((w, score))
+
+            scores.sort(key=lambda x: x[1], reverse=True)
+            top[label] = scores[:n]
+
+        return top
