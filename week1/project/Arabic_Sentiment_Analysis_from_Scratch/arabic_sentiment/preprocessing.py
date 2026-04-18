@@ -31,7 +31,7 @@ class ArabicPreprocessor:
         may be written with different Alef forms on social media.
         """
 
-        text = re.sub("[أ|إ|آ|ٱ]","ا",text)
+        text = re.sub("[أإآٱ]","ا",text)
         return text
 
     def normalize_teh_marbuta(self, text: str) -> str:
@@ -72,7 +72,7 @@ class ArabicPreprocessor:
         
         Hint: Unicode ranges for emojis include U+1F300–U+1F9FF and others.
         """
-        text = re.sub("[^ا-ي 0-9]","",text)
+        text = re.sub("[^ا-ي 0-9]"," ",text)
         return text
 
     def remove_repeated_characters(self, text: str) -> str:
@@ -82,7 +82,7 @@ class ArabicPreprocessor:
         Arabic writers often repeat characters for emphasis.
         Collapse any character repeated more than twice to a single character.
         """
-        text = re.sub(r'(.)\1+', r'\1', text) 
+        text = re.sub(r'(.)\1{2,}', r'\1\1', text) 
         return text
 
     def tokenize(self, text: str) -> List[str]:
@@ -101,7 +101,7 @@ class ArabicPreprocessor:
             if l != "" or l!= " ":
                 lst2.append(l)
 
-        return lst2
+        return lst
 
 
     def preprocess(self, text: str, tokenize: bool = True):
