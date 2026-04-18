@@ -82,8 +82,8 @@ class ArabicPreprocessor:
         Arabic writers often repeat characters for emphasis.
         Collapse any character repeated more than twice to a single character.
         """
-        # TODO: implement
-        raise NotImplementedError
+        text = re.sub(r'(.)\1+', r'\1', text) 
+        return text
 
     def tokenize(self, text: str) -> List[str]:
         """
@@ -95,8 +95,14 @@ class ArabicPreprocessor:
         Returns:
             A list of word tokens.
         """
-        # TODO: implement
-        raise NotImplementedError
+        lst = text.split()
+        lst2 = []
+        for l in lst:
+            if l != "" or l!= " ":
+                lst2.append(l)
+
+        return lst2
+
 
     def preprocess(self, text: str, tokenize: bool = True):
         """
@@ -111,6 +117,19 @@ class ArabicPreprocessor:
         Returns:
             List of tokens or a cleaned string.
         """
-        # TODO: chain all steps
-        raise NotImplementedError
-```
+        text1 = self.remove_diacritics(text)
+        text2 = self.normalize_alef(text1)
+        text3 = self.normalize_teh_marbuta(text2)
+        text4 = self.remove_urls(text3)
+        text5 = self.remove_mentions(text4)
+        text6 = self.remove_hashtags(text5)
+        text7 = self.remove_punctuation_and_emojis(text6)
+        text8 = self.remove_repeated_characters(text7)
+
+        if tokenize:
+            lst = self.tokenize(text8)
+            return(lst)
+        else:
+            return(text8)
+        
+
