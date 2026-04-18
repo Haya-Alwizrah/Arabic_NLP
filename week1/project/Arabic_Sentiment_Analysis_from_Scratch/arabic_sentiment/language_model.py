@@ -20,10 +20,12 @@ class NgramLanguageModel:
         Args:
             n: Order of the n-gram model. Must be 2 or 3.
         """
-
         self.n = n
+        self.vocab = set()
+        self.counts = Counter()
+        self.context_counts = Counter()
   
-    def extract_ngrams(tokens: List[str]) -> List[Tuple[str, ...]]:
+    def extract_ngrams(self, tokens: List[str]) -> List[Tuple[str, ...]]:
         """
         Extract all n-grams from a token list.
         
@@ -33,13 +35,16 @@ class NgramLanguageModel:
         Example (bigram): ['a', 'b', 'c'] → [('<s>','a'), ('a','b'), ('b','c'), ('c','</s>')]
         """
         lst = []
-        tokens = ["<s>"] + tokens + ["</s>"]
+        if self.n == 2:
+            tokens = ["<s>"] + tokens + ["</s>"]
+            for l in range(len(tokens)-1):
+                lst.append((tokens[l], tokens[l+1]))
+        else:
+            tokens = ["<s>", "<s>"] + tokens + ["</s>"]
+            for l in range(len(tokens)-2):
+                lst.append((tokens[l], tokens[l+1], tokens[l+2]))
         
-        for l in range(len(tokens)-1):
-            lst.append((tokens[l], tokens[l+1]))
-
         return lst
-
 
     def train(self, corpus: List[List[str]]) -> None:
         """
@@ -48,6 +53,12 @@ class NgramLanguageModel:
         Args:
             corpus: A list of token lists (one per tweet/sentence).
         """
+        
+        for s in corpus:
+            for w in s:
+                pass
+
+        
         # TODO: count n-grams and context counts, build vocab
         raise NotImplementedError
 
