@@ -23,36 +23,36 @@ raw_test = [x.split() for x in test_data["tweet"]]
 clean_test = test_data["clean_tweet"]
 
 # ------------------------------------- Language Model -------------------------------------------
-bigram_raw = NgramLanguageModel(2)
-bigram_pre = NgramLanguageModel(2)
-trigram_raw = NgramLanguageModel(3)
-trigram_pre = NgramLanguageModel(3)
-
-# train with train data
-bigram_raw.train(raw_train)
-bigram_pre.train(clean_train)
-trigram_raw.train(raw_train)
-trigram_pre.train(clean_train)
-
-# perplexity with test data
-bigram_p_raw = bigram_raw.perplexity(raw_test)
-bigram_p_pre = bigram_pre.perplexity(clean_test)
-trigram_p_raw = trigram_raw.perplexity(raw_test)
-trigram_p_pre = trigram_pre.perplexity(clean_test)
-
-print("\n" + "="*45)
-print(f"{'Model':<15} | {'Raw PPL':<12} | {'Preprocessed':<12}")
-print("-" * 45)
-print(f"{'Bigram':<15} | {bigram_p_raw:<12.2f} | {bigram_p_pre:<12.2f}")
-print(f"{'Trigram':<15} | {trigram_p_raw:<12.2f} | {trigram_p_pre:<12.2f}")
-print("="*45 + "\n")
 
 models = {
-    "Bigram (raw)": bigram_raw,
-    "Bigram (Clean)": bigram_pre,
-    "Trigram (Raw)": trigram_raw,
-    "Trigram (Clean)": trigram_pre
+    "Bigram":   NgramLanguageModel(2),
+    "Bigram (Clean)": NgramLanguageModel(2),
+    "Trigram":  NgramLanguageModel(3),
+    "Trigram (Clean)": NgramLanguageModel(3)
 }
+
+for name, model in models.items():
+    if "Clean" in name:
+        model.train(clean_train)
+    else:
+        model.train(raw_train)
+
+
+results = {}
+for name, model in models.items():
+    if "Clean" in name:
+        results[name] = model.perplexity(clean_test)
+    else:
+        results[name] = model.perplexity(raw_test)
+
+
+print("\n" + "-"*45)
+print(f" {'Model'}  | {'Raw PPL'} | {'Preprocessed'}")
+print("-" * 45)
+print(f"{'Bigram'}  | {results['Bigram']} | {results['Bigram (Clean)']}")
+print(f"{'Trigram'} | {results['Trigram']} | {results['Trigram (Clean)']}")
+print("-"*45 + "\n")
+
 
 for name, model in models.items():
     print(f"--- Generated Samples from [{name}] ---")
