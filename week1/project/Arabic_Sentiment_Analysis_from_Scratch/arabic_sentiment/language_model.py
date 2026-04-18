@@ -20,12 +20,10 @@ class NgramLanguageModel:
         Args:
             n: Order of the n-gram model. Must be 2 or 3.
         """
-        # TODO: initialize data structures
-        raise NotImplementedError
 
-    def _extract_ngrams(
-        self, tokens: List[str]
-    ) -> List[Tuple[str, ...]]:
+        self.n = n
+  
+    def extract_ngrams(tokens: List[str]) -> List[Tuple[str, ...]]:
         """
         Extract all n-grams from a token list.
         
@@ -34,8 +32,14 @@ class NgramLanguageModel:
         
         Example (bigram): ['a', 'b', 'c'] → [('<s>','a'), ('a','b'), ('b','c'), ('c','</s>')]
         """
-        # TODO: implement
-        raise NotImplementedError
+        lst = []
+        tokens = ["<s>"] + tokens + ["</s>"]
+        
+        for l in range(len(tokens)-1):
+            lst.append((tokens[l], tokens[l+1]))
+
+        return lst
+
 
     def train(self, corpus: List[List[str]]) -> None:
         """
