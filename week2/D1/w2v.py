@@ -19,7 +19,7 @@ class W2V():
         return final.tolist()
     
 
-    def data_f(self, data):
+    def add_data(self, data):
         self.data = data
         for d in data:
             self.data_embd.append(self.embding(d))
@@ -62,7 +62,7 @@ database = [
     "girls no answer",
     "twitter is bad"
 ]
-w2v.data_f(database)
+w2v.add_data(database)
 
 c = w2v.searcher("when did obama died")
 print(c)
