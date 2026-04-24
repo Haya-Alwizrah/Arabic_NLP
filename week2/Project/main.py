@@ -1,6 +1,6 @@
 from datasets import load_dataset
 from preprocessing import ArabicPreprocessor
-from Arab_w2v import Arab_w2v
+from week2.Project.Arab2v import Arab_w2v
 import numpy as np
 
 ds = load_dataset("arbml/Arabic_Sentiment_Twitter_Corpus")

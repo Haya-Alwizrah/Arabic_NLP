@@ -1,7 +1,7 @@
 from gensim.models import Word2Vec
 import numpy as np
 
-class Arab_w2v():
+class Arab2v():
     def __init__(self, vec_size, win, min_c,sg):
         self.vec_size = vec_size
         self.win = win
