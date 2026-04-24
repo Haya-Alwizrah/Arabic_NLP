@@ -1,4 +1,5 @@
 from gensim.models import Word2Vec
+import numpy as np
 
 class Arab_w2v():
     def __init__(self, vec_size, win, min_c,sg):
@@ -24,3 +25,23 @@ class Arab_w2v():
 
     def save(self, path="word2vec.model"):
         self.model.save(path)
+
+    def s2v(self, data):
+        vs = self.model.vector_size
+        s2v = []
+
+        for sent in data:
+            vec = []
+
+            for w in sent:
+                if w in self.model.wv:
+                    vec.append(self.model.wv[w])
+
+            if len(vec) == 0:
+                sent_vec = np.zeros(vs)
+            else:
+                sent_vec = np.mean(vec, axis=0)
+
+            s2v.append(sent_vec)
+
+        return np.array(s2v)    

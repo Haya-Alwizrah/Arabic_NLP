@@ -18,6 +18,6 @@ class SentenceRepresentation:
 
     def transform(self, dataset):
         return np.array([
-            self.sentence_to_vec(sent)
+            self.s2v(sent)
             for sent in dataset
         ])
