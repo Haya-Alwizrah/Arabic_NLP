@@ -18,7 +18,7 @@ a2v = Arab2v(100,5,1,0)
 a2v.train(train_data["clean_tweet"])
 print(a2v.most_similar("رمضان"))
 print(a2v.similarity("الهلال", "النصر"))
-a2v.save("week2\Project\w2v.model")
+# a2v.save("week2\Project\w2v.model")
 
 # --------------------------------------[ Part 2 ]---------------------------------------
 X_train = a2v.s2v(train_data["clean_tweet"])
