@@ -17,10 +17,10 @@ class Arab_w2v():
         )
 
     def most_similar(self, word):
-        return self.model.wv.most_similar(word)   
+        return self.model.wv.most_similar(word)[0]
     
     def similarity(self, word1, word2):
-        return self.model.wv.similarity(word1, word2)
+        return float(self.model.wv.similarity(word1, word2))
 
     def save(self, path="word2vec.model"):
         self.model.save(path)
