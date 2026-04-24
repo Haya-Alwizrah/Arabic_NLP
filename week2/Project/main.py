@@ -1,14 +1,13 @@
+from datasets import load_dataset
 from preprocessing import ArabicPreprocessor
 
-p = ArabicPreprocessor()
 
-text = """
-السَلَامُ عَليكم ورحمههه الله وبركاتههه
-👑👑👑
-✨🔟
 
-#الالاب @hhggf
-https:haygghf
-"""
-d = p.preprocess(text)
-print(d)
+ds = load_dataset("arbml/Arabic_Sentiment_Twitter_Corpus")
+
+
+# ----------------------------------- Pre Processing -----------------------------------------
+
+pre_processor = ArabicPreprocessor()
+data = ds.map(lambda x: {"clean_tweet": pre_processor.preprocess(x["tweet"])})
+
