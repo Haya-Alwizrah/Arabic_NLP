@@ -1,7 +1,6 @@
 from datasets import load_dataset
 from preprocessing import ArabicPreprocessor
 from embedding import ArabicEmbedding
-import numpy as np
 
 ds = load_dataset("arbml/Arabic_Sentiment_Twitter_Corpus")
 
