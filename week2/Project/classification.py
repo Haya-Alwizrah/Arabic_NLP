@@ -1,3 +1,0 @@
-class SimpleClassification:
-    def __init__(self):
-        ...
