@@ -1,4 +1,4 @@
-# Project 4 : Arabic RAG system with Gradio interface
+# Project 4 : Arabic RAG System with Gradio Interface
 
 ---
 
@@ -16,7 +16,7 @@ used 30000 arabic wikipedia samples from:
 Model used for embeddings:
 [Omartificial-Intelligence-Space/Arabic-Triplet-Matryoshka-V2](https://huggingface.co/Omartificial-Intelligence-Space/Arabic-Triplet-Matryoshka-V2).
 
-## chunk functions:
+## Chunk Functions:
 The project includes 3 chunking methods:
 - **Fixed Chunking**: Splits text using fixed chunk sizes.
 - **Recursive Chunking**: Splits text recursively using separators.
